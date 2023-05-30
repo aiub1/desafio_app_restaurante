@@ -8,7 +8,10 @@ const router = express.Router()
 router.get('/', (req, res) => res.json({ hello: "Olá, seja bem vindo ao meu treino de back-end" }))
 
 router.get('/customers', customersController.index)
+router.get('/customers/:id', customersController.show)
 router.post('/customers', customersController.save)
+router.patch('/customers/:id', customersController.update)
+router.delete('/customers/:id', customersController.delete)
 
 router.get('/restaurants', restaurantsController.index)
 router.post('/restaurants', restaurantsController.save)

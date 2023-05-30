@@ -56,9 +56,9 @@ export const restaurantsController = {
         return res.status(404).json({ message: 'Restaurante não encontrado!' })
       }
 
-      restaurant.name = name
-      restaurant.cnpj = cnpj
-      restaurant.since = since
+      restaurant.name = name ?? restaurant.name
+      restaurant.cnpj = cnpj ?? restaurant.cnpj
+      restaurant.since = since ?? restaurant.since
 
       await restaurant.save()
       return res.status(201).json(restaurant)
