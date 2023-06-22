@@ -18,5 +18,6 @@ router.post('/restaurants', restaurantsController.save)
 router.get('/restaurants/:id', restaurantsController.show)
 router.patch('/restaurants/:id', restaurantsController.update)
 router.delete('/restaurants/:id', restaurantsController.delete)
+router.post('/restaurants/:id/addRating', restaurantsController.addRating)
 
 export { router }

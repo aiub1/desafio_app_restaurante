@@ -1,12 +1,13 @@
-import { DataTypes, Model } from 'sequelize'
-
+import { DataTypes, HasOneCreateAssociationMixin, Model } from 'sequelize'
 import { sequelize } from '../index'
+import { RatingInstance } from './rating'
 
 export interface RestaurantsIntance extends Model {
   id: number
   name: string
   cnpj: string
-  since: Date
+  since: Date,
+  addRating: HasOneCreateAssociationMixin<RatingInstance>
 }
 
 const Restaurants = sequelize.define<RestaurantsIntance>(

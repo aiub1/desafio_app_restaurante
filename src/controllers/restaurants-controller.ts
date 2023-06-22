@@ -5,7 +5,7 @@ import { Restaurants } from "../database/models"
 export const restaurantsController = {
   index: async (req: Request, res: Response) => {
     try {
-      const restaurants = await Restaurants.findAll()
+      const restaurants = await Restaurants.findAll({include: ['rating']})
       return res.json(restaurants)
     } catch (err) {
       if (err instanceof Error) {
@@ -36,7 +36,7 @@ export const restaurantsController = {
     const { id } = req.params
 
     try {
-      const restaurant = await Restaurants.findByPk(id)
+      const restaurant = await Restaurants.findByPk(id, {include: ['rating']})
       return res.json(restaurant)
     } catch (err) {
       if (err instanceof Error) {
@@ -79,6 +79,24 @@ export const restaurantsController = {
     } catch (err) {
       if (err instanceof Error) {
         return res.status(400).json({ message: err.message })
+      }
+    }
+  },
+
+  addRating: async (req: Request, res: Response) => {
+    const restaurantId = req.params.id
+    const { customerId, stars } = req.body
+    
+    try {
+      const restaurant = await Restaurants.findByPk(restaurantId)
+     
+      if (restaurant === null) return res.status(404).json({message: 'Restaurante não encontrado'})
+
+      await restaurant.addRating(customerId, stars ?? 1)
+      return res.status(204).send()
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(201).json({ message: err.message })
       }
     }
   }
